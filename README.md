@@ -23,7 +23,7 @@ CARA MENJALANKAN PROGRAM
 1. Command w untuk keatas
 2. Command d untuk kekanan
 3. Command a untuk kekiri
-4.Command s untuk kebawah
+4. Command s untuk kebawah
 5. Command t untuk menembak
 6. Command i untuk memperlihatkan info permainan
 7. Command j untuk memperlihatkan jarak kecoa-robot
