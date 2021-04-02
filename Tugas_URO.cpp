@@ -1,9 +1,15 @@
+//Library
 #include <iostream>
 #include <cmath>
 #include <cstdlib>
 #include <sstream>
 using namespace std;
+
+//maks_x dan maks_y adalah ukuran grid petanya
+//maks_kecoak merupakan jumlah maksimum kecoak
+//jangkauan_robot adalah jangkauan maksimum serangan robot
 int maks_x=20; int maks_y=10; int maks_kecoak=15; int jangkauan_robot=5;
+//pesan output
 string pesan_output=" ";
 
 //object kecoak
@@ -24,7 +30,7 @@ class Kecoak{
         void kecoak_bergerak(){
             int move_1 = -1 + (rand()%3);
             int move_2 = -1 + (rand()%3);
-			if ((x + move_1 >= 0) && (x + move_1 <= maks_x)){
+	    if ((x + move_1 >= 0) && (x + move_1 <= maks_x)){
                 x += move_1;
             }
             if ((y + move_2 >= 0) && (y + move_2 <= maks_y)){
@@ -38,6 +44,7 @@ class Kecoak{
 };
 //object robot
 class Robot{
+	//Atribut Robot
     public:
         int x; int y; int health; int damage;
     public:
@@ -77,17 +84,19 @@ class Robot{
             }
         }
     private:
+	//Settingan awal robot
         void setting_awal(){
             x=0; y=0; health=10; damage=2;
         }
 };
+//Membuat variabel objek Robot
 Robot robotku;
-//mekanisme program
+//Kelas mekanisme program
 class Mekanisme{
-    public: //karakter di program
+    public: //Kecoak di program
         int jumlah_kecoak;
         Kecoak arr_kecoak[128];
-    public: //inisialisasi kecoa
+    public: //inisialisasi kecoak, ingin membuat sekumpulan kecoak dengan posisi awalyang random dan jumlah kecoak yang random
         Mekanisme(){
             jumlah_kecoak = rand() % maks_kecoak;
             antisipasi_duplikat();
@@ -245,9 +254,9 @@ class Mekanisme{
             if (not is_sama){
                 robotku.robot_bergerak(inputan);
             }
-			else {
-				pesan_output ="Gerakan tidak valid. Robot menabrak kecoa\n";
-			}    
+	    else {
+	 	pesan_output ="Gerakan tidak valid. Robot menabrak kecoa\n";
+	    }    
         }
         void antisipasi_duplikat(){ //untuk menghindari kecoa tabrakan
             for (int i=0; i<jumlah_kecoak; i++){
@@ -291,10 +300,12 @@ int main() {
     char command;
     while(command != 'p' && !robotku.isRobotMati() && mekanismeku.jumlah_kecoa_hidup()!=0 ){
         mekanismeku.peta();
+	//untuk info
         if (command == 'i'){
             system("cls"); 
             mekanismeku.info();
         }
+	//untuk kalkulasi jarak
         if (command == 'j'){
             system("cls"); 
             mekanismeku.kalkulasi_jarak();
@@ -304,12 +315,14 @@ int main() {
         pesan_output = " ";
         printf("Health: %d\n",robotku.health);
         cout << "command: "; cin>>command;
+	//Mengerakan Robot
         if ((command == 'a') || (command == 'w') || (command == 's') || (command =='d')){
             mekanismeku.kontrol_gerak_robot(command);
             mekanismeku.kecoak_menyerang();
             mekanismeku.kontrol_gerak_kecoak();
             system("cls"); 
         }
+	//Robot Menyerang
         else if (command == 't')
         {
             mekanismeku.robot_menyerang();
@@ -317,6 +330,7 @@ int main() {
             mekanismeku.kontrol_gerak_kecoak();
             system("cls");
         }
+	//Kondisi lain
         else
         {
             if ((command =='i') || (command =='j')){continue;}
@@ -329,13 +343,12 @@ int main() {
     printf("Anda telah membunuh %d kecoa\n",mekanismeku.jumlah_kecoak-mekanismeku.jumlah_kecoa_hidup());
     if(command=='p') {
     	printf("Anda telah keluar. Terimakasih telah bermain\n");
-	}
+    }
     else if (robotku.isRobotMati()) {
     	printf("Maaf. Robot telah mati. Silahkan coba lagi\n");
-	}
-	else {
-		printf("Selamat! Anda telah menang :D\n");
-	}
-	
+    }
+    else {
+	printf("Selamat! Anda telah menang :D\n");
+    }	
     return 0;
 }
