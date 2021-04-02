@@ -36,24 +36,28 @@ class Kecoak{
             if (health<=0){isMati=true;}
         }
 };
-
+//object robot
 class Robot{
     public:
         int x; int y; int health; int damage;
     public:
+    	//inisialisasi
         Robot(){
             setting_awal();
         }
+        //penghitung jarak robot kecoa
         float jarak_robot_kecoak(Kecoak kecoak){
             float x2=(kecoak.x - x);
             float y2=(kecoak.y - y);
             return sqrt(x2*x2 + y2*y2);
 
         }
+        //boolean yang memberi informasi apakah robot mati atau tidak
         bool isRobotMati(){
                 if (health<=0){return true;}
                 else{return false;}
         }
+        //pengatur gerak robot
         void robot_bergerak(char control){
             if (control == 'w'){
                 if ((y+1)>maks_y){pesan_output="Tidak bisa bergerak karena akan di luar batas grid\n";}
@@ -78,20 +82,22 @@ class Robot{
         }
 };
 Robot robotku;
+//mekanisme program
 class Mekanisme{
-    public:
+    public: //karakter di program
         int jumlah_kecoak;
         Kecoak arr_kecoak[128];
-    public:
+    public: //inisialisasi kecoa
         Mekanisme(){
             jumlah_kecoak = rand() % maks_kecoak;
             antisipasi_duplikat();
-        }
+        } //program mencetak kecoa
         void printing_x_kecoak(){
             for(int i=0;i<jumlah_kecoak;i++){
                 cout << arr_kecoak[i].x << " " << i << endl;
             }
         }
+        //kondisional serangan robot
         void robot_menyerang(){
             int indeks_kecoak_diserang[jumlah_kecoak];
             bool ada_serangan=false;
@@ -103,26 +109,27 @@ class Mekanisme{
                     j++;
                 }
             }
+            //apabila robot menyerang kecoa dalam jangkauan
             if (ada_serangan){
-                int indeks_yang_diserang = rand()%j;
+                int indeks_yang_diserang = rand()%j; //kecoa yang diserang random
                 arr_kecoak[indeks_kecoak_diserang[indeks_yang_diserang]].health -= robotku.damage;
                 arr_kecoak[indeks_kecoak_diserang[indeks_yang_diserang]].cek_mati();
                 if (arr_kecoak[indeks_kecoak_diserang[indeks_yang_diserang]].isMati){
-                    if (jumlah_kecoa_hidup() == 0){
+                    if (jumlah_kecoa_hidup() == 0){ //kecoa habis
                         pesan_output="Semua Kecoak telah musnah\n";
                     }
-                    else{
+                    else{ //kecoa belum habis
                         stringstream ss;
                         ss<<jumlah_kecoa_hidup();
                         pesan_output = "1 Kecoak telah tumbang, tersisa "+ss.str()+" Kecoak lagi\n";
                     }
                 }
             }
-            else{
+            else{ //kecoa diliuar jangkauan
                 pesan_output = "Kecoak berada di luar jangkauan\n";
             }
         }
-        void kecoak_menyerang(){
+        void kecoak_menyerang(){ //serangan kecoa
             for (int i=0; i<jumlah_kecoak; i++){
                 if (not arr_kecoak[i].isMati){
                     if (robotku.jarak_robot_kecoak(arr_kecoak[i]) <= arr_kecoak[i].jangkauan_serang){
@@ -131,14 +138,14 @@ class Mekanisme{
                 }
             }
         }
-        int jumlah_kecoa_hidup(){
+        int jumlah_kecoa_hidup(){ //program untuk memanggil kecoa yang idup
             int count=0;
             for(int i=0;i<jumlah_kecoak;i++){
                 if (not (arr_kecoak[i].isMati)){count++;}
             }
             return count;
         }
-        void info(){
+        void info(){ //info
             cout << "======INFO======\n";
             cout << "--Robot \n";
             printf("Koordinat = (%d,%d)\n",robotku.x,robotku.y);
@@ -158,7 +165,7 @@ class Mekanisme{
             }
             printf("\n");
         }
-        void sorting(Kecoak kecoak[128],int panjang_array){
+        void sorting(Kecoak kecoak[128],int panjang_array){ //sorting kecoa berdasar jarak
             for(int i=0; i<panjang_array; i++){
                 float min = robotku.jarak_robot_kecoak(kecoak[i]);
                 bool found = false;
@@ -178,7 +185,7 @@ class Mekanisme{
                 }
             }
         }
-        void kalkulasi_jarak(){
+        void kalkulasi_jarak(){ //hitung jarak
             Kecoak kumpulan_kecoak[128];
             int j=0;
             for (int i=0;i<jumlah_kecoak;i++){
@@ -196,7 +203,7 @@ class Mekanisme{
             }
             printf("\n");
         }
-        void peta(){
+        void peta(){ //buat peta dalam array
             int baris=maks_y+1;
             int kolom=maks_x+1;
             string grid[baris][kolom];
@@ -226,7 +233,7 @@ class Mekanisme{
                 cout<<endl;
             }
         }
-        void kontrol_gerak_robot(char inputan){
+        void kontrol_gerak_robot(char inputan){ //kondisional gerak robot
             Robot coba_robot=robotku;
             coba_robot.robot_bergerak(inputan);
             bool is_sama=false;
@@ -242,7 +249,7 @@ class Mekanisme{
 				pesan_output ="Gerakan tidak valid. Robot menabrak kecoa\n";
 			}    
         }
-        void antisipasi_duplikat(){
+        void antisipasi_duplikat(){ //untuk menghindari kecoa tabrakan
             for (int i=0; i<jumlah_kecoak; i++){
                 for (int j=0; j<jumlah_kecoak; j++){
                     if ((arr_kecoak[j].x == arr_kecoak[i].x) && (arr_kecoak[j].y == arr_kecoak[i].y) && (j!=i)){
@@ -254,7 +261,7 @@ class Mekanisme{
                 }
             }
         }
-        void kontrol_gerak_kecoak(){
+        void kontrol_gerak_kecoak(){ //mengontrol gerak kecoa
             for (int i=0; i<jumlah_kecoak; i++){
                 Kecoak coba_kecoak = arr_kecoak[i];
                 coba_kecoak.kecoak_bergerak();
@@ -273,7 +280,7 @@ class Mekanisme{
                 }
             }
         }
-        bool robot_mati(){
+        bool robot_mati(){ //bool untuk mengecek apakah robot mati
         if (robotku.isRobotMati()){return true;}
         else{return false;}
     }
@@ -292,6 +299,7 @@ int main() {
             system("cls"); 
             mekanismeku.kalkulasi_jarak();
         }
+        //beri pesan output
         cout <<pesan_output;
         pesan_output = " ";
         printf("Health: %d\n",robotku.health);
