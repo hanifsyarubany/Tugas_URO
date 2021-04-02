@@ -1,0 +1,26 @@
+Abu Hanif Muhammad Syarubany - 13219053
+Muhammad Morteza Mudrick - 13219061
+
+=========================READ ME========================
+===================TUBES URO PROGRAMMING===============
+
+INISIALISASI
+1. Robot bermula di (0,0)
+2. Kecoa dengan jumlah yang random dispawn di awal 
+3. Koordinat kecoa juga random
+4. Health robot diinisialisasi 10
+5. Damage robot adalah
+6. Jangkauan robot adalah
+7. Health kecoa diinisialisasi
+8. Damage serangan kecoa adalah
+9. Jangkauan robot adalah
+
+CARA MENJALANKAN PROGRAM
+1. Command w untuk keatas
+2. Command d untuk kekanan
+3. Command a untuk kekiri
+4.Command s untuk kebawah
+5. Command t untuk menembak
+6. Command i untuk memperlihatkan info permainan
+7. Command j untuk memperlihatkan jarak kecoa-robot
+8. Command p untuk keluar dari program
