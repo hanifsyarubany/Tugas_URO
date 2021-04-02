@@ -5,10 +5,14 @@
 using namespace std;
 int maks_x=20; int maks_y=10; int maks_kecoak=15; int jangkauan_robot=5;
 string pesan_output=" ";
+
+//object kecoak
 class Kecoak{
+	//definisikan atribut kecoa
     public:
         int x; int y; int health; int damage; int jangkauan_serang; bool isMati;
     public:
+    	//inisialisasi keadaan kecoa
         Kecoak(){
             x = 1 + rand() % maks_x+1;
             y = 1 + rand() % maks_y+1;
@@ -16,20 +20,18 @@ class Kecoak{
             jangkauan_serang = 2;
             isMati = false;
         }
-        bool isKecoakMati(){
-            if (health==0){return true;}
-            else{return false;}
-        }
+        //gerak kecoa yang random
         void kecoak_bergerak(){
             int move_1 = -1 + (rand()%3);
             int move_2 = -1 + (rand()%3);
-            if ((x + move_1 >= 0) && (x + move_1 <= maks_x)){
+			if ((x + move_1 >= 0) && (x + move_1 <= maks_x)){
                 x += move_1;
             }
             if ((y + move_2 >= 0) && (y + move_2 <= maks_y)){
                 y += move_2;
             }
         }
+        //kalau kecoa mati
         void cek_mati(){
             if (health<=0){isMati=true;}
         }
@@ -49,7 +51,7 @@ class Robot{
 
         }
         bool isRobotMati(){
-                if (health==0){return true;}
+                if (health<=0){return true;}
                 else{return false;}
         }
         void robot_bergerak(char control){
@@ -235,7 +237,10 @@ class Mekanisme{
             }
             if (not is_sama){
                 robotku.robot_bergerak(inputan);
-            }    
+            }
+			else {
+				pesan_output ="Gerakan tidak valid. Robot menabrak kecoa\n";
+			}    
         }
         void antisipasi_duplikat(){
             for (int i=0; i<jumlah_kecoak; i++){
@@ -277,7 +282,7 @@ class Mekanisme{
 int main() {
     Mekanisme mekanismeku;
     char command;
-    while(command != 'p'){
+    while(command != 'p' && !robotku.isRobotMati() && mekanismeku.jumlah_kecoa_hidup()!=0 ){
         mekanismeku.peta();
         if (command == 'i'){
             system("cls"); 
@@ -287,9 +292,9 @@ int main() {
             system("cls"); 
             mekanismeku.kalkulasi_jarak();
         }
-        printf("\n");
         cout <<pesan_output;
         pesan_output = " ";
+        printf("Health: %d\n",robotku.health);
         cout << "command: "; cin>>command;
         if ((command == 'a') || (command == 'w') || (command == 's') || (command =='d')){
             mekanismeku.kontrol_gerak_robot(command);
@@ -313,5 +318,16 @@ int main() {
             system("cls");
         }
     }
+    printf("Anda telah membunuh %d kecoa\n",mekanismeku.jumlah_kecoak-mekanismeku.jumlah_kecoa_hidup());
+    if(command=='p') {
+    	printf("Anda telah keluar. Terimakasih telah bermain\n");
+	}
+    else if (robotku.isRobotMati()) {
+    	printf("Maaf. Robot telah mati. Silahkan coba lagi\n");
+	}
+	else {
+		printf("Selamat! Anda telah menang :D\n");
+	}
+	
     return 0;
 }
