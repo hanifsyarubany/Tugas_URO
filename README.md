@@ -29,4 +29,10 @@ CARA MENJALANKAN PROGRAM
 7. Command j untuk memperlihatkan jarak kecoa-robot
 8. Command p untuk keluar dari program
 
+CARA BERMAIN
+1. Gerakkan Robot dengan comman 'w','d','a','s'
+2. Jika ingin menembak, tekanlah 't'
+3. Robot akan menembak salah satu kecoak random yang berada pada jangkauan serang robot
+4. Menangilah permainan dengan menembak sambil menghindari kecoak, karena kecoak juga bisa menyerang
+
 Link Github : https://github.com/hanifsyarubany/Tugas_URO.git
